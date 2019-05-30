@@ -1,0 +1,17 @@
+docker run -d --name tileshop-php -e SKIP_COMPOSER=1 -e RUN_SCRIPTS=0 -p 80:80 -p 443:443 -v /Personal-Folder/sample-project/tileshop/html/:/var/www/html/tileshop/ -v /Personal-Folder/docker-sample/conf/:/etc/nginx/sites-enabled/ -v /Personal-Folder/docker-sample/ssl/:/etc/nginx/ssl/ --net tileshop_net --net-alias tileshop_php 82dc312fbf0d
+
+docker run -d --name tileshop-db -p 3306:3306 -v tileshop-vl-db:/var/lib/mysql -e MYSQL_DATABASE=tiles_shop -e MYSQL_ROOT_PASSWORD=root -e MYSQL_USER=root -e MYSQL_PASSWORD=root --net tileshop_net --net-alias tileshop_db 7faa3c53e6d6
+
+docker run -d --name python-pdf -v /NavigosGroup/sample-project/python-demo-pdf-processor:/src:rw 0cb80a2fea18 // CPython 3
+
+docker run -d --name golang-demo -v /NavigosGroup/sample-project/sample-go/src:/src:rw 4fd0d1d77a03
+
+docker run -d --name it-search-php -v /NavigosGroup/sample-project/it-search-integrate/src/:/var/www/html:rw -l traefik.frontend.rule=Host:it-search-api.local ee277c837e15
+
+docker run -d --name traefik-local -p 80:80 -p 8080:8080 -v /var/run/docker.sock:/var/run/docker.sock 0d2f1c7902c7 --api --docker
+
+docker run -d --name outstanding-jobs-script -v /NavigosGroup/sample-project/outstanding-jobs:/src:rw 142ffa98ead9 // Pypy3
+
+docker run -d --name outstanding-jobs-api -v /NavigosGroup/sample-project/outstanding-jobs-api/:/var/www/html:rw -l traefik.frontend.rule=PathPrefixStrip:/outstanding-api/ ee277c837e15
+
+docker run -d --name auth-central -v /NavigosGroup/sample-project/auth-central/src/auth:/var/www/html:rw -l traefik.frontend.rule=Host:sso.local ee277c837e15
